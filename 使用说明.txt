@@ -1,0 +1,41 @@
+LubanEditor · Luban 配表助手
+========================================
+
+【怎么用】
+1. 双击 LubanEditor.exe（不需要安装 Python，也不需要装别的）
+2. 点「打开工程」选工程根目录（有 luban.conf 的那一层，示例选 sample_project）
+3. 点「发布工程」设置参数并运行 gen 脚本（＝导表发布）
+4. 点「新建表」填字段；「表声明文件类型」选 Excel Schema（写进 Schemas\__tables__.xlsx）
+   或 XML Schema（写进 xml 定义文件）→ 创建后自动生成数据表模板
+5. 点底部「保存」写回定义；点顶部「知识点」查规则、术语与常见错误
+
+【随包的文件】
+- sample_project\   示例工程：Schemas\ 放定义文件（__tables__ / __beans__ / __enums__.xlsx）、
+                    Data\ 放数据表。打开工程时选它，一眼能看懂长什么样。
+                    随便动，工具不会改坏任何文件。
+- LubanEditor.log      运行日志，报问题时发这里；双击没反应先看它
+
+【常见问题】
+Q：双击 exe 没反应？
+A：看同目录的 LubanEditor.log。提示缺 DLL 就先装
+   Microsoft Visual C++ 运行库（vc_redist.x64）。
+
+Q：第一次启动怎么这么慢？
+A：单文件版启动要先解压到临时目录，约 5-15 秒，取决于硬盘；
+   建议把整个目录拷（连 log 文件一起拷）。
+
+Q：杀毒软件报毒？
+A：PyInstaller 打包的 exe 常见误报，不影响使用。源码全在本地，可自己核对。
+
+Q：会改坏我的文件吗？
+A：只动 luban.conf 里登记过的定义文件（__tables__ / __beans__ / __enums__.xlsx 或
+   xml 定义），且只做单元格级修改、样式不动、注释不丢；每次写盘前自动备份到
+   <定义文件目录>\_lubankit_backup\，最多保留 20 份。
+
+Q：支持哪些工程？
+A：Luban 5.x + Windows + Excel 数据表（__tables__.xlsx 等）。
+   列名不做硬编码，define_from_file / read_schema_from_file 之类不同写法都能认上。
+
+【自检】
+命令行运行：LubanEditor.exe --selftest <工程目录>
+会检查 PySide6 / openpyxl / 知识点库 / 打包 / 示例工程是否完好。

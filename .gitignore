@@ -1,0 +1,33 @@
+# ---- 构建产物（PyInstaller / build.bat 生成）----
+build/
+dist/
+*.zip
+.pack_tmp/
+dep_ver.txt
+build.log
+run.log
+LubanEditor.log
+
+# ---- 打包/运行用的本地虚拟环境 ----
+.venv/
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+
+# ---- IDE / 编辑器 ----
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ---- 系统文件 ----
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# ---- AI 助手工作数据（不随仓库分发）----
+.codebuddy/
