@@ -3753,6 +3753,20 @@ class MainWindow(QMainWindow):
         want = os.path.normcase(os.path.abspath(path))
         return any(p and os.path.normcase(os.path.abspath(p)) == want for p in pool)
 
+    def _is_xml_def_file(self, path: str) -> bool:
+        """Defines 目录下的 .xml 都算定义文件（含空的 common.xml / 模块名.xml）。
+
+        空的类型文件 sniff 识别不出内容，会漏出定义文件列表；但预览时仍要
+        走「定义文件」路径，好显示底部「新增自定义类型」按钮。
+        """
+        if not path.lower().endswith(".xml"):
+            return False
+        try:
+            dd = os.path.normcase(os.path.abspath(exceldef.defines_dir(self.model)))
+            return os.path.normcase(os.path.dirname(os.path.abspath(path))) == dd
+        except Exception:
+            return False
+
     def _file_tag(self, path: str) -> str:
         if self._is_def_file(path):
             return "[定义]"
@@ -3923,7 +3937,7 @@ class MainWindow(QMainWindow):
         if base in self.DEF_FILES:
             self._show_def_summary(base)
             return
-        if self._is_def_file(path):
+        if self._is_def_file(path) or self._is_xml_def_file(path):
             self._show_def_file_summary(path)
             return
         name = self._table_for_file(path)
